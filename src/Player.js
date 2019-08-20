@@ -26,7 +26,14 @@ class Player extends Character {
     super(data);
 
     this.account = data.account || null;
-    this.experience = data.experience || 0;
+    this.worth = Object.assign({
+      experience: 0,
+      spent_experience: 0,
+      gold: 0,
+      bank: 0,
+      quest_points: 0,
+      devotion: 0,
+    }, data.worth);
     this.extraPrompts = new Map();
     this.password  = data.password;
     this.prompt = data.prompt || '> ';
@@ -220,7 +227,7 @@ class Player extends Character {
   serialize() {
     let data = Object.assign(super.serialize(), {
       account: this.account.name,
-      experience: this.experience,
+      worth: this.worth,
       inventory: this.inventory && this.inventory.serialize(),
       metadata: this.metadata,
       password: this.password,
