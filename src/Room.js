@@ -161,10 +161,6 @@ class Room extends GameEntity {
       { dir: 'south', coord: [0, -1, 0] },
       { dir: 'up', coord: [0, 0, 1] },
       { dir: 'down', coord: [0, 0, -1] },
-      { dir: 'northeast', coord: [1, 1, 0] },
-      { dir: 'northwest', coord: [-1, 1, 0] },
-      { dir: 'southeast', coord: [1, -1, 0] },
-      { dir: 'southwest', coord: [-1, -1, 0] },
     ];
 
     for (const adj of adjacents) {
