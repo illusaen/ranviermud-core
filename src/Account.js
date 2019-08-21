@@ -19,6 +19,7 @@ class Account {
     this.username   = data.username;
     this.characters = data.characters || [];
     this.password   = data.password;
+    this.activeCharacter = data.activeCharacter;
     this.banned = data.banned || false;
     this.deleted = data.deleted || false;
     // Arbitrary data bundles are free to shove whatever they want in
@@ -130,6 +131,7 @@ class Account {
       username,
       characters,
       password,
+      activeCharacter,
       metadata,
     } = this;
 
@@ -137,6 +139,7 @@ class Account {
       username,
       characters,
       password,
+      activeCharacter,
       metadata
     };
   }
