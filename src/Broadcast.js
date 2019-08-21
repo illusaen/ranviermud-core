@@ -121,8 +121,11 @@ class Broadcast {
    * @param {object} extra     extra data to avail to the prompt string interpolator
    * @param {number} wrapWidth
    * @param {boolean} useColor
+   * @param {boolean} show
    */
-  static prompt(player, extra, wrapWidth, useColor) {
+  static prompt(player, extra, wrapWidth, useColor, show = true) {
+    if (!show) { return; }
+
     player.socket._prompted = false;
     Broadcast.at(player, '\r\n' + player.interpolatePrompt(player.prompt, extra) + ' ', wrapWidth, useColor);
     let needsNewline = player.extraPrompts.size > 0;
