@@ -82,6 +82,10 @@ class Player extends Character {
    * @param {object} extraData Any extra data to give the prompt access to
    */
   interpolatePrompt(promptStr, extraData = {}) {
+    if (!promptStr) {
+      return '> ';
+    }
+
     let attributeData = {};
     for (const [attr, value] of this.attributes) {
       attributeData[attr] = {
