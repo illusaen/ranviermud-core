@@ -53,6 +53,32 @@ class AreaManager {
   }
 
   /**
+   * Delete instance of area, cleaning up all entities inside it. Note that the
+   * given area does not need to be defined as instanced in the first place. Also
+   * note that the player and their followers must be removed manually.
+   *
+   * @param {GameState} gameState
+   * @param {string} areaName
+   * @param {string} instanceId
+   */
+  deleteInstance(gameState, areaName, instanceId) {
+    const area = this.getArea(areaName, instanceId);
+    area.npcs.forEach(npc => {
+      gameState.MobManager.removeMob(npc);
+    });
+
+    area.rooms.forEach(room => {
+      room.items.forEach(item => {
+        gameState.ItemManager.remove(item);
+      });
+
+      area.removeRoom(room);
+    });
+
+    this.removeArea(area, instanceId);
+  }
+
+  /**
    * @param {string} areaName
    * @param {?string} instanceId
    * @return string
