@@ -84,7 +84,13 @@ class AreaManager {
    * @return Array of areas with instance ID.
    */
   getInstancedAreas(instanceId) {
-    return this.areas.filter(area => area.instanced && area.instanceId === instanceId);
+    let instanced = [];
+    this.areas.forEach(area => {
+      if (area.instanced && area.instanceId === instanceId) {
+        instanced.push(area);
+      }
+    });
+    return instanced;
   }
 
   /**
