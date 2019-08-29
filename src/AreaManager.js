@@ -87,7 +87,6 @@ class AreaManager {
     let instanced = [];
     this.areas.forEach(area => {
       if (area.instanced && area.instanceId === instanceId) {
-        console.log(area.name);
         instanced.push(area);
       }
     });
