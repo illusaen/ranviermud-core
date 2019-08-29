@@ -78,6 +78,15 @@ class AreaManager {
     this.removeArea(area, instanceId);
   }
 
+
+  /**
+   * @param {string} instanceId
+   * @return Array of areas with instance ID.
+   */
+  getInstancedAreas(instanceId) {
+    return this.areas.filter(area => area.instanced && area.instanceId === instanceId);
+  }
+
   /**
    * @param {string} areaName
    * @param {?string} instanceId
