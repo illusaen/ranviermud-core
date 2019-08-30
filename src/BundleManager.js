@@ -609,8 +609,10 @@ class BundleManager {
 
       if (skill.type === SkillType.SKILL) {
         this.state.SkillManager.add(skill);
-      } else {
+      } else if (skill.type === SkillType.SPELL) {
         this.state.SpellManager.add(skill);
+      } else {
+        this.state.PassiveManager.add(skill);
       }
     }
 
