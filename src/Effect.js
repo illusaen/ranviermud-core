@@ -299,7 +299,7 @@ class Effect extends EventEmitter {
     }
 
     if (data.skill) {
-      this.skill = state.SkillManager.get(data.skill) || state.SpellManager.get(data.skill);
+      this.skill = state.SkillManager.get(data.skill) || state.SpellManager.get(data.skill) || state.PassiveManager.get(data.skill);
     }
   }
 }
