@@ -7,5 +7,4 @@
 module.exports = {
   SKILL: Symbol("SKILL"),
   SPELL: Symbol("SPELL"),
-  PASSIVE: Symbol("PASSIVE"),
 };
