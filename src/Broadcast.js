@@ -137,10 +137,6 @@ class Broadcast {
       }
     }
 
-    if (needsNewline) {
-      Broadcast.at(player, '> ');
-    }
-
     player.socket._prompted = true;
     if (player.socket.writable) {
       player.socket.command('goAhead');
