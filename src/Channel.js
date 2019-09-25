@@ -71,22 +71,37 @@ class Channel {
     message = this.audience.alterMessage(message);
 
     // Private channels also send the target player to the formatter
+    let sendEventMessage = null;
     if (this.audience instanceof PrivateAudience) {
+      if (!message.length) {
+        throw new NoMessageError();
+      }
+
       if (!targets.length) {
         throw new NoRecipientError();
       }
-      Broadcast.sayAt(sender, this.formatter.sender(sender, targets[0], message, this.colorify.bind(this)));
+
+      if (targets.length === 1 && targets[0] === sender) {
+        return Broadcast.sayAt(sender, 'You try to tell yourself something but decide to keep it to yourself.');
+      } else {
+        sendEventMessage = this.formatter.sender(sender, targets[0], message, this.colorify.bind(this));
+        Broadcast.sayAt(sender, sendEventMessage);
+      }
     } else {
-      Broadcast.sayAt(sender, this.formatter.sender(sender, null, message, this.colorify.bind(this)));
+      sendEventMessage = this.formatter.sender(sender, null, message, this.colorify.bind(this));
+      Broadcast.sayAt(sender, sendEventMessage);
+    }
+
+    if (sendEventMessage) {
+      sender.emit('channelSend', sendEventMessage);
     }
 
     // send to audience targets
+    let receiveEventMessage = null;
     Broadcast.sayAtFormatted(this.audience, message, (target, message) => {
-      return this.formatter.target(sender, target, message, this.colorify.bind(this));
+      receiveEventMessage = this.formatter.target(sender, target, message, this.colorify.bind(this));
+      return receiveEventMessage;
     });
-
-    // strip color tags
-    const rawMessage = message.replace(/\<\/?\w+?\>/gm, '');
 
     for (const target of targets) {
       /**
@@ -96,9 +111,11 @@ class Channel {
        * @event GameEntity#channelReceive
        * @param {Channel} channel
        * @param {Character} sender
-       * @param {string} rawMessage
+       * @param {string} receiveEventMessage
        */
-      target.emit('channelReceive', this, sender, rawMessage);
+      if (receiveEventMessage) {
+        target.emit('channelReceive', this, sender, receiveEventMessage);
+      }
     }
   }
 
